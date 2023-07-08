@@ -1,5 +1,6 @@
 package com.example.sadatest.domain
 
+
 data class GitRepo(
     val owner: Owner,
     val name: String,

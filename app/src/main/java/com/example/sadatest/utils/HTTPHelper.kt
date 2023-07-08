@@ -8,23 +8,23 @@ import java.net.UnknownHostException
 
 suspend fun <T : Any> executeApiCall(
     execute: suspend () -> Response<T>
-): Result<T> {
+): FetchResult<T> {
     return try {
         val response = execute()
         if (response.isSuccessful) {
-            Result.success(response.body()!!)
+            FetchResult.OnSuccess(response.body()!!)
         } else {
-            Result.failure(IOException(response.message()))
+            FetchResult.OnFailure(IOException(response.message()))
         }
     } catch (exc: HttpException) {
-        Result.failure(exc)
+        FetchResult.OnFailure(exc)
     } catch (exc: IOException) {
-        Result.failure(exc)
+        FetchResult.OnFailure(exc)
     } catch (exc: UnknownHostException) {
-        Result.failure(exc)
+        FetchResult.OnFailure(exc)
     } catch (exc: SocketTimeoutException) {
-        Result.failure(exc)
+        FetchResult.OnFailure(exc)
     } catch (exc: NullPointerException) {
-        Result.failure(exc)
+        FetchResult.OnFailure(exc)
     }
 }

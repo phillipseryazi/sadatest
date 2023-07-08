@@ -1,6 +1,7 @@
 package com.example.sadatest.data
 
 import com.example.sadatest.network.APIService
+import com.example.sadatest.utils.FetchResult
 import com.google.common.truth.Truth.assertThat
 import com.google.gson.Gson
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,13 +50,16 @@ class RemoteDataSourceTest {
             .setBody(Gson().toJson(repos))
         mockWebServer.enqueue(expectedResponse)
 
-        val actualResponse = repository.searchUserRepositories(
+        val response = repository.searchUserRepositories(
             mapOf(
                 "language" to "",
                 "sort" to "stars"
             )
         )
-        assertThat(actualResponse.getOrNull()?.items).hasSize(0)
+
+        assertThat(response).isInstanceOf(FetchResult.OnSuccess::class.java)
+        val result = response as FetchResult.OnSuccess
+        assertThat(result.data.items).hasSize(0)
     }
 
     @Test
@@ -90,13 +94,16 @@ class RemoteDataSourceTest {
             .setBody(Gson().toJson(repos))
         mockWebServer.enqueue(expectedResponse)
 
-        val actualResponse = repository.searchUserRepositories(
+        val response = repository.searchUserRepositories(
             mapOf(
                 "language" to "",
                 "sort" to "stars"
             )
         )
-        assertThat(actualResponse.getOrNull()?.items).hasSize(2)
+
+        assertThat(response).isInstanceOf(FetchResult.OnSuccess::class.java)
+        val result = response as FetchResult.OnSuccess
+        assertThat(result.data.items).hasSize(2)
     }
 
     @Test
@@ -105,12 +112,15 @@ class RemoteDataSourceTest {
             .setResponseCode(HttpURLConnection.HTTP_CLIENT_TIMEOUT)
         mockWebServer.enqueue(expectedResponse)
 
-        val actualResponse = repository.searchUserRepositories(
+        val response = repository.searchUserRepositories(
             mapOf(
                 "language" to "",
                 "sort" to "stars"
             )
         )
-        assertThat(actualResponse.exceptionOrNull()).isInstanceOf(SocketTimeoutException::class.java)
+
+        assertThat(response).isInstanceOf(FetchResult.OnFailure::class.java)
+        val result = response as FetchResult.OnFailure
+        assertThat(result.error).isInstanceOf(SocketTimeoutException::class.java)
     }
 }
