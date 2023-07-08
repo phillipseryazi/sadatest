@@ -1,8 +1,10 @@
 package com.example.sadatest.data
 
+import com.example.sadatest.domain.GitRepo
+import com.example.sadatest.domain.Owner
 import com.google.gson.annotations.SerializedName
 
-data class GitReposDTO(
+data class GitRepoResponse(
     @SerializedName("items")
     val items: List<GitRepoDTO>
 )
@@ -26,3 +28,13 @@ data class OwnerDTO(
     @SerializedName("avatar_url")
     val avatar_url: String
 )
+
+fun GitRepoDTO.toGitRepo(): GitRepo {
+    return GitRepo(
+        owner = Owner(login = owner.login, avatar_url = owner.avatar_url),
+        name = name,
+        description = description,
+        stargazers_count = stargazers_count,
+        language = language
+    )
+}

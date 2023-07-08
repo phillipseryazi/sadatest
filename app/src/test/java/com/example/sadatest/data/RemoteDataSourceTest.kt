@@ -43,7 +43,7 @@ class RemoteDataSourceTest {
 
     @Test
     fun `test success with no users 200`() = runTest {
-        val repos = emptyList<GitReposDTO>()
+        val repos = GitRepoResponse(items = emptyList())
         val expectedResponse = MockResponse()
             .setResponseCode(HttpURLConnection.HTTP_OK)
             .setBody(Gson().toJson(repos))
@@ -55,40 +55,34 @@ class RemoteDataSourceTest {
                 "sort" to "stars"
             )
         )
-        assertThat(actualResponse.getOrThrow()).hasSize(0)
+        assertThat(actualResponse.getOrNull()?.items).hasSize(0)
     }
 
     @Test
     fun `test success with users 200`() = runTest {
-        val repos = listOf(
-            GitReposDTO(
-                items = listOf(
-                    GitRepoDTO(
-                        owner = OwnerDTO(
-                            login = "test-user1",
-                            avatar_url = "https//:test_user1.com"
-                        ),
-                        name = "test-repo1",
-                        description = "this is the first test repo",
-                        stargazers_count = 4,
-                        language = "Javascript"
-                    )
+        val repos = GitRepoResponse(
+            items = listOf(
+                GitRepoDTO(
+                    owner = OwnerDTO(
+                        login = "test-user1",
+                        avatar_url = "https//:test_user1.com"
+                    ),
+                    name = "test-repo1",
+                    description = "this is the first test repo",
+                    stargazers_count = 4,
+                    language = "Javascript"
+                ),
+                GitRepoDTO(
+                    owner = OwnerDTO(
+                        login = "test-user2",
+                        avatar_url = "https//:test_user2.com"
+                    ),
+                    name = "test-repo2",
+                    description = "this is the second test repo",
+                    stargazers_count = 10,
+                    language = "Python"
                 )
-            ),
-            GitReposDTO(
-                items = listOf(
-                    GitRepoDTO(
-                        owner = OwnerDTO(
-                            login = "test-user2",
-                            avatar_url = "https//:test_user2.com"
-                        ),
-                        name = "test-repo2",
-                        description = "this is the second test repo",
-                        stargazers_count = 10,
-                        language = "Python"
-                    )
-                )
-            ),
+            )
         )
 
         val expectedResponse = MockResponse()
@@ -102,8 +96,7 @@ class RemoteDataSourceTest {
                 "sort" to "stars"
             )
         )
-        assertThat(actualResponse.getOrThrow()).hasSize(2)
-
+        assertThat(actualResponse.getOrNull()?.items).hasSize(2)
     }
 
     @Test
