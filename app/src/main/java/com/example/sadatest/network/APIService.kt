@@ -1,10 +1,11 @@
 package com.example.sadatest.network
 
-import com.example.sadatest.data.UserRepositoryDTO
+import com.example.sadatest.data.GitReposDTO
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.QueryMap
 
 interface APIService {
-    @GET("/search/repositories?q=language=+sort:stars")
-    suspend fun searchUserRepositories(): Response<List<UserRepositoryDTO>>
+    @GET("/search/repositories")
+    suspend fun searchUserRepositories(@QueryMap options: Map<String, String>): Response<List<GitReposDTO>>
 }

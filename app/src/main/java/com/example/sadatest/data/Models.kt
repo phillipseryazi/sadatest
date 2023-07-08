@@ -2,12 +2,12 @@ package com.example.sadatest.data
 
 import com.google.gson.annotations.SerializedName
 
-data class UserRepositoryDTO(
+data class GitReposDTO(
     @SerializedName("items")
-    val items: List<RepositoryDTO>
+    val items: List<GitRepoDTO>
 )
 
-data class RepositoryDTO(
+data class GitRepoDTO(
     @SerializedName("owner")
     val owner: OwnerDTO,
     @SerializedName("name")

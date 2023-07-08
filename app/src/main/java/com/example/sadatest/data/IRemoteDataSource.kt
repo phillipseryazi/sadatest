@@ -1,5 +1,5 @@
 package com.example.sadatest.data
 
 interface IRemoteDataSource {
-    suspend fun searchUserRepositories(): Result<List<UserRepositoryDTO>>
+    suspend fun searchUserRepositories(options: Map<String, String>): Result<List<GitReposDTO>>
 }
