@@ -1,6 +1,6 @@
 package com.example.sadatest.domain
 
-import com.example.sadatest.fakes.FakeRemoteDataSource
+import com.example.sadatest.fakes.FakeRemoteDataSourceSuccess
 import com.example.sadatest.utils.FetchResult
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,7 +11,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class GitRepoRepositoryTest {
 
-    private val remoteDataSource = FakeRemoteDataSource()
+    private val remoteDataSource = FakeRemoteDataSourceSuccess()
     lateinit var repository: IGitRepoRepository
 
 

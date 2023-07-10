@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import com.example.sadatest.R
 import com.example.sadatest.utils.TestTags
 
@@ -20,8 +22,11 @@ fun SadaNavbar() {
         title = {
             Text(
                 text = stringResource(R.string.text_trending),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.scrim
+                color = MaterialTheme.colorScheme.scrim,
+                fontWeight = FontWeight.Bold
             )
         },
         modifier = Modifier

@@ -4,6 +4,7 @@ import com.example.sadatest.domain.GitRepo
 
 sealed class HomeEvent {
     data class SearchGitRepos(val options: Map<String, String>) : HomeEvent()
+    data class RetrySearchGitRepos(val options: Map<String, String>) : HomeEvent()
 }
 
 data class HomeScreenState(

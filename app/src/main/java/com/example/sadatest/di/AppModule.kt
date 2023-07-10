@@ -6,6 +6,8 @@ import com.example.sadatest.domain.GitRepoRepository
 import com.example.sadatest.domain.IGitRepoRepository
 import com.example.sadatest.network.APIService
 import com.example.sadatest.utils.BASE_URL
+import com.example.sadatest.utils.IDispatcherProvider
+import com.example.sadatest.utils.MyDispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,5 +64,9 @@ object AppModule {
     @Provides
     fun providesMainRepository(remoteDataSource: IRemoteDataSource) =
         GitRepoRepository(remoteDataSource) as IGitRepoRepository
+
+    @Singleton
+    @Provides
+    fun providesMyDispatcherProvider() = MyDispatcherProvider() as IDispatcherProvider
 
 }

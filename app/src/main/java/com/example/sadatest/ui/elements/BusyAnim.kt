@@ -1,7 +1,6 @@
 package com.example.sadatest.ui.elements
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -23,17 +22,14 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.sadatest.R
-import com.example.sadatest.ui.models.HomeEvent
 import com.example.sadatest.ui.theme.SadaTestTheme
 import com.example.sadatest.utils.TestTags
 
 @Composable
-fun BusyAnim(handleEvent: (event: HomeEvent) -> Unit) {
+fun BusyAnim(modifier: Modifier, handleEvent: () -> Unit) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lottie_busy_animation))
     Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .testTag(TestTags.BUSY_ANIM_TEST_TAG),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LottieAnimation(
@@ -56,16 +52,7 @@ fun BusyAnim(handleEvent: (event: HomeEvent) -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedButton(
-            onClick = {
-                handleEvent(
-                    HomeEvent.SearchGitRepos(
-                        mapOf(
-                            "language" to "",
-                            "sort" to "stars"
-                        )
-                    )
-                )
-            },
+            onClick = { handleEvent() },
             shape = RoundedCornerShape(6.dp),
             modifier = Modifier.testTag(TestTags.RETRY_BTN_TEST_TAG),
             border = BorderStroke(
@@ -87,6 +74,7 @@ fun BusyAnim(handleEvent: (event: HomeEvent) -> Unit) {
 fun BusyAnimPreview() {
     SadaTestTheme {
         BusyAnim(
+            modifier = Modifier,
             handleEvent = {}
         )
     }

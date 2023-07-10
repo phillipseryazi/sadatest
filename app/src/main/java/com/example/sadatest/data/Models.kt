@@ -19,7 +19,7 @@ data class GitRepoDTO(
     @SerializedName("stargazers_count")
     val stargazers_count: Int,
     @SerializedName("language")
-    val language: String
+    val language: String?
 )
 
 data class OwnerDTO(
@@ -29,12 +29,18 @@ data class OwnerDTO(
     val avatar_url: String
 )
 
+fun GitRepoResponse.getRepoList(): List<GitRepo> {
+    return items.map {
+        it.toGitRepo()
+    }
+}
+
 fun GitRepoDTO.toGitRepo(): GitRepo {
     return GitRepo(
         owner = Owner(login = owner.login, avatar_url = owner.avatar_url),
         name = name,
         description = description,
         stargazers_count = stargazers_count,
-        language = language
+        language = language ?: "null"
     )
 }

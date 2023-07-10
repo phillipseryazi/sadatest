@@ -5,8 +5,9 @@ import com.example.sadatest.data.GitRepoResponse
 import com.example.sadatest.data.IRemoteDataSource
 import com.example.sadatest.data.OwnerDTO
 import com.example.sadatest.utils.FetchResult
+import java.io.IOException
 
-class FakeRemoteDataSource : IRemoteDataSource {
+class FakeRemoteDataSourceSuccess : IRemoteDataSource {
     override suspend fun searchUserRepositories(options: Map<String, String>): FetchResult<GitRepoResponse> {
         return FetchResult.OnSuccess(
             data = GitRepoResponse(
@@ -34,5 +35,11 @@ class FakeRemoteDataSource : IRemoteDataSource {
                 )
             )
         )
+    }
+}
+
+class FakeRemoteDataSourceFailure : IRemoteDataSource {
+    override suspend fun searchUserRepositories(options: Map<String, String>): FetchResult<GitRepoResponse> {
+        return FetchResult.OnFailure(error = IOException("Test Exception"))
     }
 }
