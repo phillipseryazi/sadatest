@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SadaTest</string>
+    <string name="text_trending">Trending</string>
+    <string name="text_something">Something went wrong...</string>
+    <string name="text_blocking_alien">An alien is probably blocking your signal</string>
+    <string name="text_retry">RETRY</string>
 </resources>
